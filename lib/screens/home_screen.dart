@@ -13,13 +13,12 @@ class HomeScreen extends StatelessWidget {
     return BackgroundWrapper(
       themeProvider: themeProvider,
       child: Scaffold(
-        backgroundColor: Colors.transparent, // يجعل الـ AppB
+        backgroundColor: Colors.transparent,
         endDrawer: HomeDrawerWidget(themeProvider: themeProvider),
-        extendBodyBehindAppBar:
-            true, // هذا السطر يجعل الجسم يمتد خلف الـ AppBar
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: Colors.transparent, // يجعل الـ AppBar شفاف
-          elevation: 0, // إزالة الظل
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           title: const Align(
             alignment: Alignment.centerRight,
             child: Text(
