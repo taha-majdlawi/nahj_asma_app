@@ -31,25 +31,112 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        body:
-            // المحتوى
-            Center(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Spacer(flex: 1),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
               child: Text(
-                "مرحباً بك 👋",
+                //   textDirection: TextDirection.rtl,
+                'أهلا وسهلا بك في تطبيق النهج الأسمى',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
+                  color: themeProvider.getIsDarkTheme
+                      ? Colors.white
+                      : Colors.black,
+                  fontFamily: 'Amiri',
                   fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black45,
-                      blurRadius: 6,
-                      offset: Offset(2, 2),
-                    ),
-                  ],
+                  //    fontSize: 24,
                 ),
+                textAlign: TextAlign.right,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
+                //   textDirection: TextDirection.rtl,
+                'الكتاب يحتوي على ثلاث مجلدات',
+                style: TextStyle(
+                  color: themeProvider.getIsDarkTheme
+                      ? Colors.white
+                      : Colors.black,
+                  fontFamily: 'Amiri',
+                  fontWeight: FontWeight.bold,
+                  //    fontSize: 24,
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+            Spacer(flex: 1),
+            ReadButton(
+              onPressed: () {},
+              text: ' المجلد الأول من كتاب النهج الأسمى',
+            ),
+            ReadButton(
+              onPressed: () {},
+              text: ' المجلد الثاني من كتاب النهج الأسمى',
+            ),
+            ReadButton(
+              onPressed: () {},
+              text: ' المجلد الثالث من كتاب النهج الأسمى',
+            ),
+            Spacer(flex: 3),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ReadButton extends StatelessWidget {
+  const ReadButton({super.key, required this.onPressed, required this.text});
+
+  final VoidCallback onPressed;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    // الألوان المستوحاة من الديكور الذهبي/النحاسي في الخلفية
+    const Color startColor = Color(0xFFC0996D); // ذهبي نحاسي فاتح
+    const Color endColor = Color(0xFFA17F51); // ذهبي نحاسي داكن
+
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+          decoration: BoxDecoration(
+            // استخدام التدرج اللوني (Gradient) لإعطاء تأثير معدني
+            gradient: const LinearGradient(
+              colors: [startColor, Color.fromARGB(255, 139, 105, 58)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.circular(15.0), // حواف دائرية
+            boxShadow: [
+              // ظل خفيف لجعله يبدو بارزًا
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.black87, // لون نص داكن ليبرز على الخلفية الذهبية
+              fontFamily: 'Amiri', // استخدام الخط الذي تستخدمه
+              // fontSize: 20,
+              fontWeight: FontWeight.bold,
+              height: 1.5, // ارتفاع السطر لتحسين قراءة النص الطويل
+            ),
+          ),
+        ),
       ),
     );
   }
