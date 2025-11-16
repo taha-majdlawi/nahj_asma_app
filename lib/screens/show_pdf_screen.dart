@@ -34,6 +34,50 @@ class _ShowPdfScreenState extends State<ShowPdfScreen> {
     _loadLastReadPage();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.pdfFileId), // عرض معرف الملف كعنوان
+        centerTitle: true,
+        actions: [
+          // 3. تم تحديث زر الطباعة لاستدعاء الديالوج بدلاً من دالة الطباعة مباشرة
+          IconButton(
+            icon: const Icon(Icons.print, size: 28),
+            tooltip: 'تحديد النطاق وطباعة المستند',
+            onPressed: _showPrintRangeDialog,
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Directionality(
+              textDirection:
+                  TextDirection.rtl, // لضمان عرض المحتوى العربي بشكل صحيح
+              child: SfPdfViewer.asset(
+                widget.pdfAssetPath,
+                controller: _pdfViewerController,
+                // هذا الـ Callback يتم تشغيله في كل مرة تتغير فيها الصفحة
+                onPageChanged: (details) {
+                  _saveCurrentPage(details.newPageNumber);
+                },
+                // تم تحديث هذا الجزء لحفظ العدد الكلي للصفحات
+                onDocumentLoaded: (details) {
+                  setState(() {
+                    _totalPages =
+                        details.document.pages.count; // تم حفظ العدد الكلي هنا
+                  });
+                  // عند اكتمال تحميل المستند، نتأكد من القفز إلى الصفحة المحفوظة
+                  if (_pdfViewerController.pageNumber != _lastReadPage) {
+                    _pdfViewerController.jumpToPage(_lastReadPage);
+                  }
+                },
+              ),
+            ),
+    );
+  }
+
   // ميزة حفظ آخر صفحة قراءة
   Future<void> _loadLastReadPage() async {
     try {
@@ -72,7 +116,12 @@ class _ShowPdfScreenState extends State<ShowPdfScreen> {
   }
 
   // ميزة الطباعة: تم تحديث توقيع الدالة لاستقبال نطاق الصفحات
-  Future<void> _printDocument(String title, String assetPath, {required int startPage, required int endPage}) async {
+  Future<void> _printDocument(
+    String title,
+    String assetPath, {
+    required int startPage,
+    required int endPage,
+  }) async {
     try {
       // تحميل ملف PDF من مجلد assets كـ بيانات
       final fileData = await DefaultAssetBundle.of(context).load(assetPath);
@@ -87,14 +136,18 @@ class _ShowPdfScreenState extends State<ShowPdfScreen> {
       // رسالة توجيهية للمستخدم لتحديد النطاق مرة أخرى في إعدادات النظام
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('تم فتح نافذة الطباعة/المشاركة. الرجاء تحديد الصفحات من $startPage إلى $endPage للطباعة في الإعدادات الأصلية.')),
+          SnackBar(
+            content: Text(
+              'تم فتح نافذة الطباعة/المشاركة. الرجاء تحديد الصفحات من $startPage إلى $endPage للطباعة في الإعدادات الأصلية.',
+            ),
+          ),
         );
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('فشل في عملية الطباعة: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('فشل في عملية الطباعة: $e')));
       }
     }
   }
@@ -213,49 +266,6 @@ class _ShowPdfScreenState extends State<ShowPdfScreen> {
           ),
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.pdfFileId), // عرض معرف الملف كعنوان
-        centerTitle: true,
-        actions: [
-          // 3. تم تحديث زر الطباعة لاستدعاء الديالوج بدلاً من دالة الطباعة مباشرة
-          IconButton(
-            icon: const Icon(Icons.print, size: 28),
-            tooltip: 'تحديد النطاق وطباعة المستند',
-            onPressed: _showPrintRangeDialog,
-          ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Directionality(
-              textDirection:
-                  TextDirection.rtl, // لضمان عرض المحتوى العربي بشكل صحيح
-              child: SfPdfViewer.asset(
-                widget.pdfAssetPath,
-                controller: _pdfViewerController,
-                // هذا الـ Callback يتم تشغيله في كل مرة تتغير فيها الصفحة
-                onPageChanged: (details) {
-                  _saveCurrentPage(details.newPageNumber);
-                },
-                // تم تحديث هذا الجزء لحفظ العدد الكلي للصفحات
-                onDocumentLoaded: (details) {
-                  setState(() {
-                    _totalPages = details.document.pages.count; // تم حفظ العدد الكلي هنا
-                  });
-                  // عند اكتمال تحميل المستند، نتأكد من القفز إلى الصفحة المحفوظة
-                  if (_pdfViewerController.pageNumber != _lastReadPage) {
-                    _pdfViewerController.jumpToPage(_lastReadPage);
-                  }
-                },
-              ),
-            ),
     );
   }
 }
