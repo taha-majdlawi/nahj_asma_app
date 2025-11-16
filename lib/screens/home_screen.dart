@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nahj_asma_app/core/widgets/background_wrapper.dart';
 import 'package:nahj_asma_app/providers/theme_provider.dart';
+import 'package:nahj_asma_app/screens/show_pdf_screen.dart';
 import 'package:nahj_asma_app/widgets/home_drawer_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(flex: 1),
+            Spacer(flex: 2),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Text(
@@ -56,7 +57,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
                 //   textDirection: TextDirection.rtl,
-                'الكتاب يحتوي على ثلاث مجلدات',
+                'الكتاب يحتوى على ثلاث مجلدات يمكنك اختيار المجلد الذي ترغب بقراته :',
                 style: TextStyle(
                   color: themeProvider.getIsDarkTheme
                       ? Colors.white
@@ -70,15 +71,45 @@ class HomeScreen extends StatelessWidget {
             ),
             Spacer(flex: 1),
             ReadButton(
-              onPressed: () {},
+              onPressed: () {
+                // عند الضغط، انتقل إلى شاشة عرض PDF
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ShowPdfScreen(
+                      pdfFileId: '`المجلد الاول`',
+                      pdfAssetPath: 'assets/pdfs_files/folder1.pdf',
+                    ),
+                  ),
+                );
+              },
               text: ' المجلد الأول من كتاب النهج الأسمى',
             ),
             ReadButton(
-              onPressed: () {},
+               onPressed: () {
+                // عند الضغط، انتقل إلى شاشة عرض PDF
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ShowPdfScreen(
+                      pdfFileId: '`المجلد الثاني`',
+                      pdfAssetPath: 'assets/pdfs_files/folder2.pdf',
+                    ),
+                  ),
+                );
+              },
               text: ' المجلد الثاني من كتاب النهج الأسمى',
             ),
             ReadButton(
-              onPressed: () {},
+            onPressed: () {
+                // عند الضغط، انتقل إلى شاشة عرض PDF
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ShowPdfScreen(
+                      pdfFileId: '`المجلد الثالث`',
+                      pdfAssetPath: 'assets/pdfs_files/folder3.pdf',
+                    ),
+                  ),
+                );
+              },
               text: ' المجلد الثالث من كتاب النهج الأسمى',
             ),
             Spacer(flex: 3),
