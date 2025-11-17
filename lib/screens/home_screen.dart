@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nahj_asma_app/core/widgets/background_wrapper.dart';
 import 'package:nahj_asma_app/providers/theme_provider.dart';
+import 'package:nahj_asma_app/screens/show_explination_videos.dart';
 import 'package:nahj_asma_app/screens/show_pdf_screen.dart';
 import 'package:nahj_asma_app/widgets/home_drawer_widget.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(24.0),
               child: Text(
                 //   textDirection: TextDirection.rtl,
-                'أهلا وسهلا بك في تطبيق النهج الأسمى',
+                'أهلا وسهلا بك في تطبيق النهج الأسمى في شرح أسماء الله الحسنى للشيخ محمد الحمود النجدي',
                 style: TextStyle(
                   color: themeProvider.getIsDarkTheme
                       ? Colors.white
@@ -85,7 +86,7 @@ class HomeScreen extends StatelessWidget {
               text: ' المجلد الأول من كتاب النهج الأسمى',
             ),
             ReadButton(
-               onPressed: () {
+              onPressed: () {
                 // عند الضغط، انتقل إلى شاشة عرض PDF
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -99,7 +100,7 @@ class HomeScreen extends StatelessWidget {
               text: ' المجلد الثاني من كتاب النهج الأسمى',
             ),
             ReadButton(
-            onPressed: () {
+              onPressed: () {
                 // عند الضغط، انتقل إلى شاشة عرض PDF
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -111,6 +112,17 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               text: ' المجلد الثالث من كتاب النهج الأسمى',
+            ),
+            ReadButton(
+              onPressed: () {
+                // عند الضغط، انتقل إلى شاشة عرض PDF
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ShowExplinationVideos(),
+                  ),
+                );
+              },
+              text: "مشاهدة الشرح",
             ),
             Spacer(flex: 3),
           ],

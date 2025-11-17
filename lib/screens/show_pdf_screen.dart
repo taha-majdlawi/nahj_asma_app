@@ -38,7 +38,10 @@ class _ShowPdfScreenState extends State<ShowPdfScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.pdfFileId), // عرض معرف الملف كعنوان
+        title: Text(
+          widget.pdfFileId,
+          style: TextStyle(fontFamily: 'Amiri', fontWeight: FontWeight.bold),
+        ), // عرض معرف الملف كعنوان
         centerTitle: true,
         actions: [
           // 3. تم تحديث زر الطباعة لاستدعاء الديالوج بدلاً من دالة الطباعة مباشرة

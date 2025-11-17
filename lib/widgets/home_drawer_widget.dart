@@ -114,7 +114,7 @@ class HomeDrawerWidget extends StatelessWidget {
               themeProvider.setDarkTheme(themeValue: value);
             },
             title: Text(
-              themeProvider.getIsDarkTheme ? "الوضع الليلي" : "الوضع النهاري",
+              themeProvider.getIsDarkTheme ? "الوضع النهاري" : "الوضع الليلي",
               style: TextStyle(fontFamily: 'Amiri'),
               textAlign: TextAlign.right,
             ),
@@ -122,8 +122,8 @@ class HomeDrawerWidget extends StatelessWidget {
               style: TextStyle(fontFamily: 'Amiri'),
               textAlign: TextAlign.right,
               themeProvider.getIsDarkTheme
-                  ? "تفعيل الوضع الداكن للتطبيق"
-                  : "تفعيل الوضع الفاتح للتطبيق",
+                  ? "تفعيل الوضع الفاتح للتطبيق"
+                  : "تفعيل الوضع الداكن للتطبيق",
             ),
             secondary: Icon(
               themeProvider.getIsDarkTheme ? Icons.dark_mode : Icons.light_mode,
