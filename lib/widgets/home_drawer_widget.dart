@@ -9,20 +9,16 @@ class HomeDrawerWidget extends StatelessWidget {
 
   final ThemeProvider themeProvider;
 
-  Future<void> _contactDev() async {
-    final Uri whatsappUri = Uri.parse("whatsapp://send?phone=972592345890");
-    if (await canLaunchUrl(whatsappUri)) {
-      await launchUrl(whatsappUri);
-    } else {
-      final Uri fallback = Uri.parse("https://wa.me/972592345890");
-      if (await canLaunchUrl(fallback)) {
-        await launchUrl(fallback, mode: LaunchMode.externalApplication);
-      } else {
-        throw "لا يمكن فتح واتساب";
-      }
+
+void _launchWhatsApp() async {
+    final url = Uri.parse(
+     "https://wa.me/972592345890?text=${Uri.encodeComponent('السلام عليكم، أريد التواصل مع مطور تطبيق النهج الأسمى لشرح أسماء وصفات الله')}"
+
+    );
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw 'تعذر فتح WhatsApp';
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -106,7 +102,7 @@ class HomeDrawerWidget extends StatelessWidget {
               style: TextStyle(fontFamily: 'Amiri'),
             ),
             leading: const Icon(Icons.arrow_back_ios),
-            onTap: _contactDev,
+            onTap: _launchWhatsApp,
           ),
           SwitchListTile(
             value: themeProvider.getIsDarkTheme,
