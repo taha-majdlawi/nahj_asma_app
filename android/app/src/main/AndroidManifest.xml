@@ -14,7 +14,7 @@
     </queries>
 
     <application
-        android:label="nahj_asma_app"
+        android:label="النهج الأسمى اشرح اسماء الله"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         
